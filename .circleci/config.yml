@@ -1,11 +1,12 @@
 version: 2.1
 executors:
-    ios:
-        environment:
-        working_directory: ~/Users/sanjaymali/Documents/CI/CITestiOS
-        resource_class: macos.x86.medium.gen2
-        macos:
-          xcode: "14.3.1"
+    environment:
+      BUNDLE_JOBS: "4"
+      BUNDLE_RETRY: "3"
+    working_directory: ~/Users/sanjaymali/Documents/CI/CITestiOS
+    resource_class: macos.x86.medium.gen2
+    macos:
+      xcode: "14.3.1"
 jobs:
   build:
     executor: xcode-executor
