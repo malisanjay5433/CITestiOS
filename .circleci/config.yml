@@ -1,9 +1,8 @@
 version: 2.1
 executors:
-  xcode-executor:
     macos:
-    xcode: "14.3.1"
-    working_directory: ~/Users/sanjaymali/Documents/CI/CITestiOS
+      xcode: "14.3.1"
+      working_directory: ~/Users/sanjaymali/Documents/CI/CITestiOS
 jobs:
   build:
     executor: xcode-executor
