@@ -11,8 +11,15 @@ jobs:
     steps:
       - checkout
 
-      - setup_remote_docker:
-          docker_layer_caching: true
+      # - setup_remote_docker:
+      #     docker_layer_caching: true
+      ios:
+      environment:
+      working_directory: ~/Users/sanjaymali/Documents/CI/CITestiOS
+      resource_class: macos.x86.medium.gen2
+        macos:
+          xcode: "14.3.1"
+
 
       - run:
           name: Install dependencies
