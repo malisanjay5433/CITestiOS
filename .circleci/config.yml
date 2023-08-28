@@ -1,0 +1,41 @@
+version: 2.1
+executors:
+  xcode-executor:
+    docker:
+      - image: circleci/macos:latest
+    working_directory: ~/project
+
+jobs:
+  build:
+    executor: xcode-executor
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Install dependencies
+          command: |
+            brew update
+            brew install cocoapods
+            pod install
+
+      - run:
+          name: Build IPA
+          command: xcodebuild -workspace CITestiOS.xcworkspace -scheme CITestiOS -configuration Release -archivePath build/CITestiOS.xcarchive archive | xcpretty
+
+      - run:
+          name: Generate IPA
+          command: xcodebuild -exportArchive -archivePath build/CITestiOS.xcarchive -exportPath build -exportOptionsPlist ExportOptions.plist | xcpretty
+
+      - persist_to_workspace:
+          root: build
+          paths:
+            - CITestiOS.ipa
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
